@@ -8,32 +8,41 @@ import whatsappIcon from '../../assets/images/icons/whatsapp.png';
 
 import styles from './styles';
 
+export interface Teacher {
+    id: number;
+    avatar: string;
+    bio: string;
+    cost: number;
+    name: string;
+    subject: string;
+    whatsapp: string;
+}
 
-function TeacherItem() {
+interface TeacherItemProps {
+    teacher: Teacher;
+}
+
+const TeacherItem:React.FC<TeacherItemProps>= ({ teacher }) => {
     return(
         <View style={styles.container}>
             <View style={styles.profile}>
                 <Image 
                     style={styles.avatar}
-                    source={{ uri: 'https://avatars0.githubusercontent.com/u/62677866?s=460&u=73b4453cea7ddd7b72ccc9f9ed3ef07e07f199cc&v=4' }}
+                    source={{ uri: teacher.avatar }}
                 />
 
                 <View style={styles.profileInfo}>
-                    <Text style={styles.name}>Lucas Sachet</Text>
-                    <Text style={styles.subject}>Maths</Text>
+                    <Text style={styles.name}>{teacher.name}</Text>
+                    <Text style={styles.subject}>{teacher.subject}</Text>
                 </View>
             </View>
 
-            <Text style={styles.bio}>
-                I'm a Full Stack developer and a enthusiastic about JavaScript technologies and their entire ecosystem.
-                {'\n'} {'\n'}
-                "Success is the sum of small efforts repeated day after day" – Robert Collier.
-            </Text>
+            <Text style={styles.bio}>{teacher.bio}</Text>
 
             <View style={styles.footer}>
                 <Text style={styles.price}>
                     Price {'  '}
-                    <Text style={styles.priceValue}>$60,00</Text>
+                    <Text style={styles.priceValue}>${teacher.cost},00</Text>
                 </Text>
 
                 <View style={styles.buttonsContainer}>
