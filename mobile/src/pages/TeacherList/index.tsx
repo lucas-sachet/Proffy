@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { ScrollView, BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage';
 import api from '../../services/api';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { Teacher } from '../../components/TeacherItem';
 
 import styles from './styles';
+import { useFocusEffect } from '@react-navigation/native';
 
 function TeacherList() {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
@@ -20,17 +21,21 @@ function TeacherList() {
     const [time, setTime] = useState('');
     
    function loadFavorites() {
-    AsyncStorage.getItem('favorites').then(response => {
-        if(response) {
-            const favoritedTeachers = JSON.parse(response);
-            const favoritedTeachersIds = favoritedTeachers.map((teacher :Teacher) => {
-                return teacher.id;
-            })
+        AsyncStorage.getItem('favorites').then(response => {
+            if(response) {
+                const favoritedTeachers = JSON.parse(response);
+                const favoritedTeachersIds = favoritedTeachers.map((teacher :Teacher) => {
+                    return teacher.id;
+                })
 
-            setFavorites(favoritedTeachersIds);
-        }
-    });
+                setFavorites(favoritedTeachersIds);
+            }
+        });
    }
+
+   useFocusEffect(() => {
+    loadFavorites();
+   })
 
     function handleToggleFiltersVisible() {
         setIsFiltersVisible(!isFiltersVisible);
